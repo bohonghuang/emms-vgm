@@ -1,0 +1,15 @@
+#+TITLE: ~emms-vgm~
+Play Video Game Music in EMMS (Emacs Multimedia System).
+* Requirement
+- ~emms~
+- ~parsec.el~
+* Installation
+** ~quelpa-use-package~
+#+BEGIN_SRC emacs-lisp
+  (use-package emms-vgm
+    :quelpa (emms-vgm :fetcher github :repo "BohongHuang/emms-vgm")
+    :demand t
+    :after emms
+    :config
+    (nconc emms-player-list emms-vgm-players-default))
+#+END_SRC
