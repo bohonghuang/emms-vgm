@@ -80,10 +80,10 @@
 
 (defconst emms-vgm-default-players '(emms-player-audacious
                                      emms-player-gme
+                                     emms-player-playgsf
                                      emms-player-zxtune
                                      emms-player-vgmstream
                                      emms-player-gbsplay
-                                     emms-player-playgsf
                                      emms-player-fluidsynth)
   "The default players provided by `emms-vgm', sorted by functional integrity.")
 
