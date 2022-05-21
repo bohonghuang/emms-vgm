@@ -32,7 +32,7 @@
   "vgmstream123" (when loop "-c") params file)
 
 (define-emms-vgm-player playgsf
-  '("gbs")
+  '("gsf")
   "playgsf" "-c" "-q" (when loop "-e") params file)
 
 (define-emms-vgm-player gbsplay
