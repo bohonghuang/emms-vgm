@@ -5,14 +5,16 @@
 ;; This file defines a collection of command line players used to play Video Game Music.
 
 ;;; Code:
+(require 'cl-lib)
+
 (require 'emms-vgm)
 
 (define-emms-vgm-player vgmstream
   '("2dx9" "aaap" "aax" "acm" "adp" "adpcm" "ads" "adx" "afc" "agsc" "ahx" "aifc" "aix"
     "amts" "as4" "asd" "asf" "asr" "ass" "ast" "at3" "aud" "aus" "baf" "baka" "bao"
-    "bar" "bcstm" "bg00" "bgw" "bh2pcm" "bmdx" "bns" "bnsf" "bo2" "brstm"
-    "caf" "capdsp" "ccc" "cfn" "cnk" "ddsp" "de2" "dec" "dmsg" "dsp" "dvi"
-    "dxh" "eam" "emff" "enth" "fag" "filp" "fsb" "genh" "gca" "gcm" "gcsw" "gcw"
+    "bar" "bcstm" "bcwav" "bg00" "bgw" "bh2pcm" "bmdx" "bns" "bnsf" "bo2" "brstm" "bwav"
+    "caf" "capdsp" "ccc" "cfn" "cnk" "cwav" "ddsp" "de2" "dec" "dmsg" "dsp" "dvi"
+    "dxh" "eam" "emff" "enth" "fag" "filp" "fsb" "fwav" "genh" "gca" "gcm" "gcsw" "gcw"
     "gms" "gsp" "hca" "hgc1" "his" "hps" "hwas" "idsp" "idvi" "ikm" "ild"
     "int" "isd" "ish" "ivaud" "ivb" "joe" "kces" "kcey" "khv" "kraw"
     "laac" "leg" "lflac" "logg" "lopus" "lps" "lsf" "lstm" "lwav" "matx" "mc3"
@@ -30,6 +32,10 @@
     "wp2" "wsd" "wsi" "wvs" "xa" "xa2" "xa30" "xma" "xmu" "xss" "xvas"
     "xwav" "xwb" "xwh" "ydsp" "ymf" "zsd" "zwdsp")
   "vgmstream123" (when loop "-c") params file)
+
+(defconst emms-player-vgmstream-header-extensions '("txth" "pos"))
+
+(cl-callf concat emms-source-file-exclude-regexp "\\|" (apply #'emms-player-simple-regexp emms-player-vgmstream-header-extensions))
 
 (define-emms-vgm-player playgsf
   '("gsf")

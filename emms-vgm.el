@@ -107,7 +107,7 @@
           (memq
            (emms-track-type track)
            '(file))
-          (gethash (string-trim-left (file-name-extension (emms-track-name track)) "mini") ,hash-table-name nil)))
+          (gethash (downcase (string-trim-left (file-name-extension (emms-track-name track)) "mini")) ,hash-table-name nil)))
        (emms-player-set ,player-name 'features ',(cl-remove-if #'null (list (when supports-loop 'endless-loop)
                                                                             (when supports-index 'track-index))))
        (defun ,player-start-name (track)
