@@ -84,13 +84,13 @@
   (append emms-player-vgmstream-extensions emms-player-gme-extensions '("mid" "psf" "psf2" "sid" "vtx" "flac" "ogg" "2sf"))
   "audacious" "-H" "-99" params file)
 
-(defconst emms-vgm-default-players '(emms-player-audacious
-                                     emms-player-gme
-                                     emms-player-playgsf
-                                     emms-player-zxtune
-                                     emms-player-vgmstream
+(defconst emms-vgm-default-players '(emms-player-fluidsynth
                                      emms-player-gbsplay
-                                     emms-player-fluidsynth)
+                                     emms-player-vgmstream
+                                     emms-player-zxtune
+                                     emms-player-playgsf
+                                     emms-player-gme
+                                     emms-player-audacious)
   "The default players provided by `emms-vgm', sorted by functional integrity.")
 
 (provide 'emms-vgm-default-players)
