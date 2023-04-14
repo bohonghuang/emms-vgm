@@ -35,24 +35,49 @@
 (defun emms-vgm-track-index-reset ()
   (setq emms-vgm-track-index nil))
 
-(defun emms-vgm-track-index-offset (offset)
+(defun emms-vgm-track-set-index (index)
+  (interactive "nEnter track index: ")
   (if (emms-vgm-track-index-playable-p)
-    (progn
-      (when emms-player-playing-p
-        (let ((emms-vgm-track-index nil))
-          (emms-stop)))
-      (setq emms-vgm-track-index (+ (or emms-vgm-track-index 0) offset))
-      (emms-start)
-      (message "Current track index: %d" emms-vgm-track-index))
-    (message "Indexed track playing is not support by current player or track")))
+      (progn
+        (when emms-player-playing-p
+          (let ((emms-vgm-track-index nil))
+            (emms-stop)))
+        (setq emms-vgm-track-index index)
+        (emms-start)
+        (message "Current track index: %d" emms-vgm-track-index))
+    (emms-vgm-track-index-playable-p)))
 
-(defun emms-vgm-track-index-next ()
+(defun emms-vgm-next-track-index ()
   (interactive)
-  (emms-vgm-track-index-offset +1))
+  (emms-vgm-track-set-index (1+ (or emms-vgm-track-index 0))))
 
-(defun emms-vgm-track-index-previous ()
+(defun emms-vgm-previous-track-index ()
   (interactive)
-  (emms-vgm-track-index-offset -1))
+  (emms-vgm-track-set-index (1- (or emms-vgm-track-index 0))))
+
+(defun emms-vgm-previous-track-or-index (function)
+  (condition-case nil
+      (progn
+        (emms-playlist-current-select-previous)
+        (emms-playlist-current-select-next)
+        (funcall function))
+    (error (if (emms-vgm-track-index-playable-p)
+               (emms-vgm-previous-track-index)
+             (funcall function)))))
+
+(advice-add #'emms-previous :around #'emms-vgm-previous-track-or-index)
+
+(defun emms-vgm-next-track-or-index (function)
+  (condition-case nil
+      (progn
+        (emms-playlist-current-select-next)
+        (emms-playlist-current-select-previous)
+        (funcall function))
+    (error (if (emms-vgm-track-index-playable-p)
+               (emms-vgm-next-track-index)
+             (funcall function)))))
+
+(advice-add #'emms-next :around #'emms-vgm-next-track-or-index)
 
 (defun emms-vgm-player-start (player cmdname params)
   (let ((process (apply #'start-process
